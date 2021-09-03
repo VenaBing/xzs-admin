@@ -27,7 +27,7 @@
       </el-form-item>
       <el-form-item label="年级：" prop="gradeId" required>
         <el-select v-model="form.gradeId" placeholder="年级">
-          <el-option v-for="item in levelEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
+          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeDesc"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="状态：" required>
@@ -63,6 +63,7 @@ export default {
         gradeId: null
       },
       formLoading: false,
+      levelEnum: JSON.parse(localStorage.getItem('levelEnum')),
       rules: {
         accountNo: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
@@ -159,8 +160,7 @@ export default {
     ...mapState('enumItem', {
       sexEnum: state => state.user.sexEnum,
       roleEnum: state => state.user.roleEnum,
-      statusEnum: state => state.user.statusEnum,
-      levelEnum: state => state.user.levelEnum
+      statusEnum: state => state.user.statusEnum
     })
   }
 }
