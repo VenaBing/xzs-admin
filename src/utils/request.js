@@ -8,6 +8,7 @@ const request = function (loadtip, query) {
   if (Cookies.get('userToken')) {
     query.headers.token = Cookies.get('userToken')
   }
+  query.baseURL = process.env.VUE_APP_BASE_URL
   if (loadtip) {
     loading = vue.prototype.$loading({
       lock: false,
