@@ -163,20 +163,15 @@ export default {
         this.levelChange(data.gradeId)
         _this.form = data
         _this.formLoading = false
-        console.log(data, this.form, '====165')
         data.paperTitleList.forEach(list => {
           let itemList = []
           if (list.questionList) {
             list.questionList.forEach(re => {
-              console.log(re, '=======175')
-              // questionApi.queryQuestionDetail({ questionId: id }).then(re => {
               const form = {
                 value: []
               }
-              // this.levelChange(q.gradeId)
               form.questionType = re.questionType
               form.gradeLevel = re.gradeId
-              // this.changeSubject(q.subjectId)
               form.subjectId = Number(re.subjectId)
               form.title = re.questionTitle
               if (re.questionItemList && re.questionItemList.length > 0) {
@@ -189,12 +184,16 @@ export default {
                 form.items = []
               }
               form.analyze = re.parsing
-              if (re.questionType === 2) {
-                form.correctArray = re.questionAnswer.split(',')
-              } else {
-                form.correct = re.questionAnswer
+              if (re.questionAnswerList.length > 0) {
+                re.questionAnswerList.forEach(list => {
+                  if (re.questionType === 2) {
+                    form.correctArray = list.questionAnswer.split(',')
+                  } else {
+                    form.correct = list.questionAnswer
+                  }
+                  form.score += list.fraction
+                })
               }
-              form.score = re.fraction
               form.difficult = re.level
               if (re.knowledgeList && re.knowledgeList.length > 0) {
                 re.knowledgeList.forEach(item => {
@@ -204,10 +203,7 @@ export default {
                 form.value = []
               }
               form.questionId = list.questionId
-              console.log(form, '=======211')
               itemList.push(form)
-              // _this.currentTitleItem.questionItems.push(form)
-              // })
             })
           }
           this.titleItems.push({
@@ -215,7 +211,6 @@ export default {
             questionItems: itemList
           })
         })
-        console.log(this.titleItems, '=====216')
       })
     }
   },
@@ -303,10 +298,8 @@ export default {
           const form = {
             value: []
           }
-          // this.levelChange(q.gradeId)
           form.questionType = re.data.questionType
           form.gradeLevel = re.data.gradeId
-          // this.changeSubject(q.subjectId)
           form.subjectId = Number(re.data.subjectId)
           form.title = re.data.questionTitle
           if (re.data.questionItemList && re.data.questionItemList.length > 0) {
@@ -319,13 +312,16 @@ export default {
             form.items = []
           }
           form.analyze = re.data.parsing
-          // if(re.data.questionAnswer.lengr)
-          if (re.data.questionType === 2) {
-            form.correctArray = re.data.questionAnswer.split(',')
-          } else {
-            form.correct = re.data.questionAnswer
+          if (re.data.questionAnswerList.length > 0) {
+            re.data.questionAnswerList.forEach(list => {
+              if (re.data.questionType === 2) {
+                form.correctArray = list.questionAnswer.split(',')
+              } else {
+                form.correct = list.questionAnswer
+              }
+              form.score += list.fraction
+            })
           }
-          form.score = re.data.fraction
           form.difficult = re.data.level
           if (re.data.knowledgeList && re.data.knowledgeList.length > 0) {
             re.data.knowledgeList.forEach(item => {
@@ -339,7 +335,6 @@ export default {
         })
       })
       this.questionPage.showDialog = false
-      console.log(this.titleItems, '======283')
     },
     levelChange (gradeId) {
       this.form.subjectId = null
@@ -366,7 +361,6 @@ export default {
       })
     },
     handleSelectionChange (val) {
-      console.log(val, '====302')
       this.questionPage.multipleSelection = val
     },
     questionTypeFormatter (row, column, cellValue, index) {
