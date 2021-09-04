@@ -7,7 +7,7 @@
       </el-form-item>
       <el-form-item label="年级：" required>
         <el-select v-model="form.gradeId" placeholder="年级">
-          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeDesc"></el-option>
+          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeName"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>

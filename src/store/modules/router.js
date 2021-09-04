@@ -14,7 +14,6 @@ const actions = {
   generateRoutes: ({ commit }, accountType) => {
     console.log(accountType)
     const authedList = filterAsyncRoutes(constantRoutes, accountType)
-    console.error(authedList)
 
     return new Promise(resolve => {
       commit('initRoutes', authedList)

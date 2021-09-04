@@ -3,7 +3,7 @@
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading"  :rules="rules">
       <el-form-item label="年级：" prop="gradeLevel" required>
         <el-select v-model="form.gradeLevel" placeholder="年级"  @change="levelChange">
-          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeDesc"></el-option>
+          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeName"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="学科：" prop="subjectId" required>

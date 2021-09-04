@@ -16,11 +16,6 @@
           <el-option v-for="item in paperTypeEnum" :key="item.key" :value="item.key" :label="item.value"></el-option>
         </el-select>
       </el-form-item>
-      <!-- <el-form-item label="时间限制：" required v-show="form.paperType===4">
-        <el-date-picker v-model="form.limitDateTime" value-format="yyyy-MM-dd HH:mm:ss" type="datetimerange"
-                        range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
-        </el-date-picker>
-      </el-form-item> -->
       <el-form-item label="试卷名称："  prop="paperName" required>
         <el-input v-model="form.paperName"/>
       </el-form-item>
@@ -121,10 +116,10 @@ export default {
         paperType: [
           { required: true, message: '请选择试卷类型', trigger: 'change' }
         ],
-        name: [
+        paperName: [
           { required: true, message: '请输入试卷名称', trigger: 'blur' }
         ],
-        suggestTime: [
+        duration: [
           { required: true, message: '请输入建议时长', trigger: 'blur' }
         ]
       },

@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item label="年级：">
         <el-select v-model="queryParam.gradeId" placeholder="年级" @change="levelChange" clearable>
-          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeDesc"></el-option>
+          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeName"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="学科：" >
@@ -22,11 +22,11 @@
       </el-form-item>
     </el-form>
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
-      <el-table-column prop="paperId" label="Id" width="90px"/>
-      <el-table-column prop="subjectName" label="学科" width="120px" />
+      <el-table-column prop="paperId" label="Id"/>
+      <el-table-column prop="subjectName" label="学科"/>
       <el-table-column prop="paperName" label="名称"  />
-      <el-table-column prop="createTime" label="创建时间" width="160px"/>
-      <el-table-column  label="操作" align="center"  width="160px">
+      <el-table-column prop="createTime" label="创建时间"/>
+      <el-table-column  label="操作" align="center">
         <template slot-scope="{row}">
           <el-button size="mini" @click="$router.push({path:'/exam/paper/edit',query:{id:row.paperId}})" >编辑</el-button>
           <el-button size="mini" type="danger"  @click="deletePaper(row)" class="link-left">删除</el-button>

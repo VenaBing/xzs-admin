@@ -20,6 +20,12 @@
       <el-table-column prop="gender" label="性别" width="60px;" :formatter="sexFormatter"/>
       <el-table-column prop="mobile" label="手机号"/>
       <el-table-column prop="createTime" label="创建时间" width="160px"/>
+      <el-table-column prop="optType" label="操作人类型">
+        <template slot-scope="{row}">
+            {{ row.optType === 1 ? '管理员' : row.optType === 2 ? '老师' : '学生'}}
+        </template>
+      </el-table-column>
+      <el-table-column prop="optName" label="操作人名称"/>
       <el-table-column label="状态" prop="stuStatus" width="70px">
         <template slot-scope="{row}">
           <el-tag :type="statusTagFormatter(row.stuStatus)">

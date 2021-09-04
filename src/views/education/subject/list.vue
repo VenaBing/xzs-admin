@@ -3,7 +3,7 @@
     <el-form :model="queryParam" ref="queryForm" :inline="true">
       <el-form-item label="年级：">
         <el-select v-model="queryParam.gradeId" placeholder="年级" clearable="">
-          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeDesc"></el-option>
+          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeName"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -62,7 +62,7 @@ export default {
         re.forEach(list => {
           gradeList.forEach((item) => {
             if (item.gradeId === list.gradeId) {
-              list.gradeName = item.gradeDesc
+              list.gradeName = item.gradeName
             }
           })
         })

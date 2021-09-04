@@ -5,8 +5,8 @@
       <el-form-item label="用户名："  prop="accountNo" required>
         <el-input v-model="form.accountNo"></el-input>
       </el-form-item>
-      <el-form-item label="密码："  required>
-        <el-input v-model="form.accountPass"></el-input>
+      <el-form-item label="密码：" prop="accountPass" required>
+        <el-input v-model="form.accountPass" type="password"></el-input>
       </el-form-item>
       <el-form-item label="真实姓名：" prop="teacherName" required>
         <el-input v-model="form.teacherName"></el-input>
@@ -65,6 +65,9 @@ export default {
       rules: {
         accountNo: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
+        ],
+        accountPass: [
+          { required: true, message: '请输入密码', trigger: 'blur' }
         ],
         teacherName: [
           { required: true, message: '请输入真实姓名', trigger: 'blur' }

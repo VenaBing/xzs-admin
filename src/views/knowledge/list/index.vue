@@ -3,7 +3,7 @@
     <el-form :model="queryParam" ref="queryForm" :inline="true">
       <el-form-item label="年级：">
         <el-select v-model="queryParam.gradeId" placeholder="年级" clearable="">
-          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeDesc"></el-option>
+          <el-option v-for="item in levelEnum" :key="item.gradeId" :value="item.gradeId" :label="item.gradeName"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -16,7 +16,7 @@
 
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="knowledgeName" label="学科" />
-      <el-table-column prop="gradeNames" label="年级"/>
+      <el-table-column prop="gradeName" label="年级"/>
       <!-- <el-table-column prop="knowledge" label="一级知识点数" /> -->
       <el-table-column width="220px" label="操作" align="center">
         <template slot-scope="{row}">
@@ -63,15 +63,7 @@ export default {
       }
       this.listLoading = true
       queryKnowledge.queryKnowledgeList(this.queryParam).then(data => {
-        const gradeList = JSON.parse(localStorage.getItem('levelEnum'))
         const re = data.data
-        re.list.forEach(list => {
-          gradeList.forEach((item) => {
-            if (item.gradeId === list.gradeId) {
-              list.gradeNames = item.gradeDesc
-            }
-          })
-        })
         this.tableData = re.list
         this.total = re.pageTotal
         this.queryParam.pageNum = re.pageNum
