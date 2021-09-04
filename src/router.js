@@ -42,14 +42,15 @@ const constantRoutes = [
     name: 'UserPage',
     meta: {
       title: '用户管理',
-      icon: 'users'
+      icon: 'users',
+      accountType: [1, 2]
     },
     children: [
       {
         path: 'student/list',
         component: () => import('@/views/user/student/list'),
         name: 'UserStudentPageList',
-        meta: { title: '学生管理', noCache: true }
+        meta: { title: '学生管理', noCache: true, accountType: [1, 2] }
       },
       {
         path: 'student/edit',
@@ -62,7 +63,7 @@ const constantRoutes = [
         path: 'teacher/list',
         component: () => import('@/views/user/teacher/list'),
         name: 'UserTeacherPageList',
-        meta: { title: '教师管理', noCache: true }
+        meta: { title: '教师管理', noCache: true, accountType: [1] }
       },
       {
         path: 'teacher/edit',
