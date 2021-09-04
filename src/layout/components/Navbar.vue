@@ -25,8 +25,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-import loginApi from '@/api/login'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
@@ -47,15 +46,12 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     logout () {
-      let _this = this
-      loginApi.logout().then(function (result) {
-        if (result.resultCode === 10000) {
-          _this.clearLogin()
-          _this.$router.push({ path: '/login' })
-        }
-      })
+      this.userlogut()
     },
-    ...mapMutations('user', ['clearLogin'])
+    ...mapMutations('user', ['clearLogin']),
+    ...mapActions({
+      userlogut: 'user/logout'
+    })
   }
 }
 </script>

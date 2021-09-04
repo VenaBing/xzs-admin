@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Cookies from 'js-cookie'
 import App from './App.vue'
 import { router } from './router'
 import store from './store'
@@ -19,21 +20,30 @@ Vue.config.productionTip = false
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
+const whiltList = ['/login']
+
 router.beforeEach(async (to, from, next) => {
-  // start progress bar
-  NProgress.start()
-  if (to.meta.title !== undefined) {
-    document.title = to.meta.title
+  const isLogin = Cookies.get('userToken')
+  const routesInited = store.state.router.routes.length > 0
+  if (isLogin) {
+    if (!routesInited) {
+      await store.dispatch('router/generateRoutes', store.state.user.accountType)
+    }
+    if (to.path === '/login') {
+      next('/')
+    } else {
+      next()
+    }
   } else {
-    document.title = '\u200E'
+    if (whiltList.includes(to.path)) {
+      next()
+    } else {
+      next('/login')
+    }
   }
-  store.commit('router/initRoutes')
-
-  if (to.path) {
-    // eslint-disable-next-line no-undef
-    _hmt.push(['_trackPageview', '/#' + to.fullPath])
+  if (to.meta && to.meta.title) {
+    document.title = to.meta.title
   }
-
   next()
 })
 

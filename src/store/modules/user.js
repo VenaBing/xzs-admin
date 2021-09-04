@@ -9,7 +9,8 @@ const state = {
   userLoginAccount: Cookies.get('userLoginAccount'),
   userLoginPsd: Cookies.get('userLoginPsd'),
   token: '',
-  levelEnum: []
+  levelEnum: [],
+  accountType: Cookies.get('accountType') ? JSON.parse(Cookies.get('accountType')) : ''
 }
 
 // actions
@@ -21,6 +22,17 @@ const actions = {
   },
   setToken ({ commit }, data) {
     commit('set_token', data)
+  },
+  logout ({ commit }) {
+    return new Promise(resolve => {
+      commit('setUserName', '')
+      commit('set_token', '')
+      commit('set_account_type', '')
+      resolve()
+      setTimeout(() => {
+        location.reload()
+      }, 500)
+    })
   }
 }
 
@@ -66,6 +78,10 @@ const mutations = {
   setLevelInfo: (state, data) => {
     state.levelEnum = data
     localStorage.setItem('levelEnum', JSON.stringify(data))
+  },
+  set_account_type: (state, accountType) => {
+    state.accountType = accountType
+    Cookies.set('accountType', accountType)
   }
 }
 

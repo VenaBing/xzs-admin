@@ -154,6 +154,7 @@ export default {
           loginApi.login(this.loginForm).then(function (result) {
             if (result && result.resultCode === 10000) {
               _this.setUserName(result.data.name)
+              _this.set_account_type(result.data.accountType)
               _this.$router.push({ path: '/' })
               _this.getLevel()
             } else {
@@ -183,7 +184,7 @@ export default {
         this.setLevelInfo(data.data.list)
       })
     },
-    ...mapMutations('user', ['setUserName', 'setUserAccount', 'setUserPsw', 'removeUser', 'setLevelInfo'])
+    ...mapMutations('user', ['setUserName', 'setUserAccount', 'setUserPsw', 'removeUser', 'setLevelInfo', 'set_account_type'])
   }
 }
 </script>
