@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">智慧教育管理系统</h3>
+        <h3 class="title">智慧云智能教育平台</h3>
       </div>
 
       <el-form-item prop="accountNo">

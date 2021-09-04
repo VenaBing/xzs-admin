@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-
     <el-form :model="form" ref="form" label-width="100px" v-loading="formLoading" :rules="rules">
       <el-form-item label="用户名："  prop="accountNo" required>
         <el-input v-model="form.accountNo"></el-input>

@@ -3,11 +3,9 @@
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
         <img  src="@/assets/logo.png" class="sidebar-logo">
-        <h1  class="sidebar-title">{{ title }} </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <img  src="@/assets/logo.png" class="sidebar-logo">
-        <h1 class="sidebar-title">{{ title }} </h1>
       </router-link>
     </transition>
   </div>
@@ -24,7 +22,7 @@ export default {
   },
   data () {
     return {
-      title: '智慧教育管理系统'
+      title: '智慧云智能教育平台'
     }
   }
 }
@@ -54,7 +52,7 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
-      width: 45px;
+      width: 100%;
       vertical-align: middle;
       margin-right: 12px;
     }

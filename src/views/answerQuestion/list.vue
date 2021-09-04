@@ -34,7 +34,7 @@
 
     <el-table v-loading="listLoading" :data="tableData" border fit highlight-current-row style="width: 100%">
       <el-table-column prop="stuName" label="学生姓名"/>
-      <el-table-column prop="gradeId" label="题目归属年级" :formatter="levelFormatter"/>
+      <el-table-column prop="gradeName" label="题目归属年级"/>
       <el-table-column prop="subjectName" label="题目归属学科"/>
       <el-table-column prop="questionType" label="题目类型" :formatter="questionTypeFormatter"/>
       <el-table-column label="题干名称">
@@ -43,8 +43,16 @@
         </template>
       </el-table-column>
       <el-table-column prop="exerciseDate" label="答题时间"/>
-      <el-table-column prop="questionAnswer" label="正确答案"/>
-      <el-table-column prop="stuAnswer" label="学生答案"/>
+      <el-table-column label="正确答案">
+        <template slot-scope="scope">
+          <span v-html="scope.row.questionAnswer" class="q-item-content"></span>
+        </template>
+      </el-table-column>
+      <el-table-column label="学生答案">
+        <template slot-scope="scope">
+          <span v-html="scope.row.stuAnswer" class="q-item-content"></span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" width="80px">
         <template slot-scope="{row}">
           <el-button size="mini" @click="showQuestion(row)">查看</el-button>
@@ -52,8 +60,9 @@
       </el-table-column>
     </el-table>
     <pagination v-show="total>0" :total="total" :page.sync="queryParam.pageNum" :limit.sync="queryParam.pageSize" @pagination="search"/>
-    <el-dialog :visible.sync="questionShow" class="answer-dialog-box" style="width: 100%;height: 100%">
-      <QuestionShow :stuMsg="stuMs" :qType="detailMsg.questionType" :question="detailMsg" :qLoading="loading"/>
+    <el-dialog :visible.sync="questionShow" class="answer-dialog-box">
+      <!-- <QuestionShow :stuMsg="stuMs" :qType="detailMsg.questionType" :question="detailMsg" :qLoading="loading"/> -->
+      <QuestionShow v-if="!loading" :stuMsg="stuMs" :question="detailMsg" :qType="detailMsg.questionType" />
     </el-dialog>
   </div>
 </template>
@@ -118,13 +127,19 @@ export default {
     },
     showQuestion (row) {
       this.stuMs = row
-      console.log(this.stuMs, '=====121')
       examPaperAnswerApi.queryExerciseDetail({ exerciseId: row.exerciseId }).then(data => {
         if (data.resultCode === 10000) {
-          const re = data.data
-          this.detailMsg = re.questionInfo
-          // this.loading = true
+          const re = data.data.questionInfo
           this.questionShow = true
+          this.detailMsg = { ...re, answer: { content: null } }
+          const type = this.detailMsg.questionType
+          if (type === 1 || type === 3 || type === 5) {
+            this.detailMsg.answer.content = this.detailMsg.exerciseAnswerList ? this.detailMsg.exerciseAnswerList[0].questionAnswer : ''
+          } else if (type === 2) {
+            this.detailMsg.answer.content = this.detailMsg.exerciseAnswerList[0].questionAnswer.split(',')
+          } else {
+            this.detailMsg.answer.content = this.detailMsg.exerciseAnswerList.map(v => v.questionAnswer)
+          }
         } else {
           this.$message.error(data.resultMsg)
         }
@@ -163,6 +178,19 @@ export default {
   .answer-dialog-box{
     .el-dialog{
       width: 80%;
+    }
+  }
+  .q-item-content{
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    /* autoprefixer: ignore next */
+    -webkit-box-orient: vertical;
+    img{
+      width: 40px;
     }
   }
 </style>
